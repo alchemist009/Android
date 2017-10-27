@@ -50,7 +50,7 @@ public class Contact implements Comparable, Serializable {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + " (" + phoneNumber + "}";
+        return firstName + " " + lastName + " (" + phoneNumber + ")";
     }
 
     @Override
@@ -62,9 +62,9 @@ public class Contact implements Comparable, Serializable {
         String[] split = line.split("\\s+");
         Contact c = new Contact();
         c.firstName = split[0].trim();
-        c.lastName = split[1].trim();
-        c.phoneNumber = split[2].trim();
-        c.emailID = split[3].trim();
+        c.lastName = (split[1] != null && !split[1].isEmpty())? split[1].trim() : "";
+        c.phoneNumber = (split[2] != null && !split[2].isEmpty())? split[2].trim() : "";
+        c.emailID = (split[3] != null && !split[3].isEmpty())? split[3].trim() : "";
         return c;
     }
 

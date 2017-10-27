@@ -56,6 +56,7 @@
             android:id="@+id/b_save"
             android:layout_weight="1"
             android:text="Save"
+            android:onClick="onClick"
             android:layout_marginHorizontal="10sp"
             android:visibility="gone"
             android:layout_width="wrap_content"
@@ -63,7 +64,8 @@
         <Button
             android:id="@+id/b_modify"
             android:layout_weight="1"
-            android:text="Save"
+            android:text="Modify"
+            android:onClick="onClick"
             android:layout_marginHorizontal="10sp"
             android:visibility="gone"
             android:layout_width="wrap_content"
@@ -71,7 +73,8 @@
         <Button
             android:id="@+id/b_delete"
             android:layout_weight="1"
-            android:text="Save"
+            android:text="Delete"
+            android:onClick="onClick"
             android:layout_marginHorizontal="10sp"
             android:visibility="gone"
             android:layout_width="wrap_content"
