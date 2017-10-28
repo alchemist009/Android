@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,9 +29,9 @@ public class FileHandler {
         String line = "";
         while((line = br.readLine()) != null) {
             list.add(Contact.readFromString(line));
-            line = br.readLine();
         }
         br.close();
+        stream.close();
         Collections.sort(list);
         return list;
     }
@@ -48,6 +47,33 @@ public class FileHandler {
             bw.newLine();
         }
         bw.close();
+        stream.close();
+        return true;
+    }
+
+    public static boolean modifyContact(Context context, Contact contact) throws IOException {
+        List<Contact> contacts = readContacts(context);
+        int index = 0;
+        for (Contact c : contacts) {
+            if(c.getFirstName().equals(contact.getFirstName()) ||
+                    c.getLastName().equals(contact.getLastName()) ||
+                    c.getEmailID().equals(contact.getEmailID()) ||
+                    c.getPhoneNumber().equals(contact.getPhoneNumber())) {
+                index++;
+                break;
+            }
+        }
+        contacts.remove(index-1);
+        contacts.add(contact);
+        Collections.sort(contacts);
+        FileOutputStream stream = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(stream));
+        for (Contact c : contacts) {
+            bw.write(c.getWritableString());
+            bw.newLine();
+        }
+        bw.close();
+        stream.close();
         return true;
     }
 
@@ -62,6 +88,7 @@ public class FileHandler {
             bw.newLine();
         }
         bw.close();
+        stream.close();
         return true;
     }
 
@@ -73,6 +100,4 @@ public class FileHandler {
         }
         return true;
     }
-
-
 }

@@ -2,13 +2,14 @@ package com.example.wra1th.customphonebook;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import classes.Contact;
 import classes.FileHandler;
@@ -22,7 +23,6 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
 
     EditText firstName, lastName, emailID, phoneNumber;
     Button saveContact, modifyContact, deleteContact;
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,23 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
 
         int operation = getIntent().getIntExtra(OPERATION, 0);
         if(operation == ADD_OPERATION) {
-            saveContact.setVisibility(View.VISIBLE);
+            firstName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    if (firstName.getText().toString().isEmpty()) {
+                        saveContact.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    saveContact.setVisibility(View.VISIBLE);
+                }
+            });
             modifyContact.setVisibility(View.GONE);
             deleteContact.setVisibility(View.GONE);
         } else if(operation == MODIFY_OPERATION) {
@@ -65,7 +81,6 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
         String message = "";
         switch (view.getId()) {
             case R.id.b_save:
-            case R.id.b_modify:
                 Contact c = new Contact(firstName.getText().toString(),
                         lastName.getText().toString(),
                         phoneNumber.getText().toString(),
@@ -76,6 +91,23 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     message = "Error saving contact";
+                } finally {
+                    Toast.makeText(ContactDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+                }
+                ContactDetailsActivity.this.finish();
+                break;
+
+            case R.id.b_modify:
+                c = new Contact(firstName.getText().toString(),
+                        lastName.getText().toString(),
+                        phoneNumber.getText().toString(),
+                        emailID.getText().toString());
+                try {
+                    FileHandler.modifyContact(ContactDetailsActivity.this, c);
+                    message = "Contact modified";
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    message = "Error modifying contact";
                 } finally {
                     Toast.makeText(ContactDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
