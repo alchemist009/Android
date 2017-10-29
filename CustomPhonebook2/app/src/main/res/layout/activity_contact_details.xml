@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Layout file for the contact details activity displaying four text boxes for the contact details and buttons for Save, Delete and Modify operations,
+     which may be visible or hidden based on in which mode the activity is launched.
+     @authors: Koulick Sankar Paul(ksp160330), Gunjan Tomer(gxt160930) -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

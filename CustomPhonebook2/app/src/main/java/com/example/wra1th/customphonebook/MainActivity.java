@@ -11,8 +11,8 @@
  * The app uses two activities. The first activity is the main screen displaying the list of contacts read from
  * a text file stored in internal memory. On the top of the screen, in the action bar an icon is present to allow
  * addition of a new contact. If no contacts have previously been added a new file is created when the
- * activity is launched. On this activity screen the user has two options: either tap the add icon in the action bar or
- * select one of the existing contacts and modify or delete it.
+ * activity is launched. On this activity screen the user has two options: either tap the add icon in the action bar
+ * or select one of the existing contacts and modify or delete it.
  *
  * Tapping the add icon takes the user to the next activity, ContactDetailsActivity which shows four fields for the
  * contact details like FirstName, LastName, PhoneNumber and EmailID along with the Save button. The user must enter
