@@ -24,8 +24,6 @@ package com.example.wra1th.customphonebook;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,6 +83,12 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     *
+     * @author: Koulick Sankar Paul
+     *
+     * Go back to the main activity when the back key is pressed.
+     */
     @Override
     public void onBackPressed() {
         ContactDetailsActivity.this.finish();

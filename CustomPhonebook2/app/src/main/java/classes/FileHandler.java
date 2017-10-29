@@ -24,10 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Class to perform various operations on the text file containing list of contacts
- *
- */
 
 public class FileHandler {
 
