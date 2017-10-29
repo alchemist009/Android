@@ -1,6 +1,6 @@
 /**
  *
- * Helper class to perform all the required operations like modify, delete and save for contacts.
+ * Helper class to perform all the required file operations like modify, delete and save for contacts.
  *
  * @authors: Gunjan Tomer, Koulick Sankar Paul
  *
@@ -35,9 +35,9 @@ public class FileHandler {
      *
      * Method to read contacts from text file and store in a list.
      *
-     * @param context
+     * @param context: Context used to open file. Typically, context of the Activity invoking read operation
      * @return List of contacts
-     * @throws IOException
+     * @throws IOException when not able to read file
      */
 
     public static List<Contact> readContacts(Context context) throws IOException {
@@ -59,10 +59,10 @@ public class FileHandler {
      *
      * Method to add a new contact to the text file using an object
      *
-     * @param context
-     * @param contact
-     * @return boolean
-     * @throws IOException
+     * @param context: Context used to open file. Typically, context of the Activity invoking write operation
+     * @param contact: New contact to be saved
+     * @return true for successful writes
+     * @throws IOException when not able to read/write file
      */
 
     public static boolean addContact(Context context, Contact contact) throws IOException {
@@ -85,10 +85,10 @@ public class FileHandler {
      *
      * Method to modify an existing contact in the text file when selected from ListView
      *
-     * @param context
-     * @param contact
-     * @return boolean
-     * @throws IOException
+     * @param context: Context used to open file. Typically, context of the Activity invoking modify operation
+     * @param contact: Contact which needs to be modified
+     * @return true for successful modifications
+     * @throws IOException when not able to read/write file
      */
     public static boolean modifyContact(Context context, Contact contact) throws IOException {
         List<Contact> contacts = readContacts(context);
@@ -125,10 +125,10 @@ public class FileHandler {
      *
      * Method to delete a contact from the text file
      *
-     * @param context
-     * @param contact
-     * @return boolean
-     * @throws IOException
+     * @param context: Context used to open file. Typically, context of the Activity invoking write operation
+     * @param contact: Contact supposed to be deleted
+     * @return true for successful deletes
+     * @throws IOException when not able to read/write file
      */
     public static boolean deleteContact(Context context, Contact contact) throws IOException {
         List<Contact> contacts = readContacts(context);
@@ -150,9 +150,9 @@ public class FileHandler {
      *
      * Method to create a new text file to store contacts
      *
-     * @param context
-     * @return boolean
-     * @throws IOException
+     * @param context: Context used to open file. Typically, context of the Activity invoking read/write operation
+     * @return true if file is created
+     * @throws IOException when unable to create a file
      */
     public static boolean createFileIfNotPresent(Context context) throws IOException {
         File file = new File(String.valueOf(context.getFilesDir()));
