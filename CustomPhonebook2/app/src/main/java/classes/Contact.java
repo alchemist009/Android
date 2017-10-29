@@ -46,10 +46,10 @@ public class Contact implements Comparable, Serializable {
         if(!(obj instanceof Contact))
             return false;
         Contact c = (Contact) obj;
-        return firstName.equals(c.firstName)
-                && lastName.equals(c.lastName)
-                && phoneNumber.equals(c.phoneNumber)
-                && emailID.equals(c.emailID);
+        return (firstName.equals(c.firstName) || firstName.equals(""))
+                && (lastName.equals(c.lastName) || lastName.equals(""))
+                && (phoneNumber.equals(c.phoneNumber) || phoneNumber.equals(""))
+                && (emailID.equals(c.emailID) || emailID.equals(""));
     }
 
     @Override
