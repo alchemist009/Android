@@ -1,10 +1,22 @@
+/**
+ * Helper class to create objects for contacts and implement custom method like toString(),
+ * compareTo(), and equals() for them.
+ *
+ * @authors: Gunjan Tomer, Koulick Sankar Paul
+ *
+ * NetIDs: gxt160930, ksp160330
+ *
+ * version 1.3: 10/28/2017
+ */
 package classes;
 
 import android.support.annotation.NonNull;
 import java.io.Serializable;
 
 /**
- * Created by wra1th on 10/26/2017.
+ * @authors: Koulick Sankar Paul, Gunjan Tomer
+ *
+ * Class to store contact details as objects
  */
 
 public class Contact implements Comparable, Serializable {
@@ -41,6 +53,20 @@ public class Contact implements Comparable, Serializable {
         return emailID;
     }
 
+
+    /**
+     *
+     * @authors: Gunjan Tomer
+     *
+     * Method to override the default equals and use it to compare contact objects instead.
+     *
+     * A true value is returned when either the corresponding contact details match or one
+     * of the fields is left empty after modification and then compared to an existing object in
+     * the contacts object list.
+     *
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Contact))
@@ -52,6 +78,13 @@ public class Contact implements Comparable, Serializable {
                 && (emailID.equals(c.emailID) || emailID.equals(""));
     }
 
+    /**
+     * @authors: Koulick Sankar Paul
+     *
+     * Method to override the default toString operation and use a StringBuilder to create a string
+     * with all the contact details appended separated by whitespace.
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -65,11 +98,29 @@ public class Contact implements Comparable, Serializable {
         return sb.toString();
     }
 
+    /**
+     *
+     * @author: Koulick Sankar Paul
+     *
+     * Method to override the default compareTo operation to perform comparisons based on FirstName
+     *
+     * @param o
+     * @return int
+     */
     @Override
     public int compareTo(@NonNull Object o) {
         return this.firstName.compareTo(((Contact) o).firstName);
     }
 
+    /**
+     * @author: Koulick Sankar Paul
+     *
+     * Method to read a string separated by tabs from the text file and store each field in the
+     * corresponding field in the Contact object.
+     *
+     * @param line
+     * @return Contact object
+     */
     public static Contact readFromString(String line) {
         String[] split = line.split("\\t");
         Contact c = new Contact();
@@ -90,6 +141,13 @@ public class Contact implements Comparable, Serializable {
         return c;
     }
 
+    /**
+     * @author: Gunjan Tomer
+     *
+     * Method to get a string separated by tabs ready to be written to the text file.
+     *
+     * @return String
+     */
     public String getWritableString() {
         return S_FIRST_NAME + firstName + "\t"
                 + S_LAST_NAME + lastName + "\t"

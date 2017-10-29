@@ -1,3 +1,13 @@
+/**
+ *
+ * Helper class to perform all the required operations like modify, delete and save for contacts.
+ *
+ * @authors: Gunjan Tomer, Koulick Sankar Paul
+ *
+ * NetIDs: gxt160930, ksp160330
+ *
+ * version 1.3: 10/28/2017
+ */
 package classes;
 
 import android.content.Context;
@@ -15,12 +25,24 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by wra1th on 10/26/2017.
+ * Class to perform various operations on the text file containing list of contacts
+ *
  */
 
 public class FileHandler {
 
     private static final String FILENAME = "mycontacts.txt";
+
+
+    /**
+     * @author: Gunjan Tomer
+     *
+     * Method to read contacts from text file and store in a list.
+     *
+     * @param context
+     * @return List of contacts
+     * @throws IOException
+     */
 
     public static List<Contact> readContacts(Context context) throws IOException {
         List<Contact> list = new ArrayList<>();
@@ -35,6 +57,17 @@ public class FileHandler {
         Collections.sort(list);
         return list;
     }
+
+    /**
+     * @author: Koulick Sankar Paul
+     *
+     * Method to add a new contact to the text file using an object
+     *
+     * @param context
+     * @param contact
+     * @return boolean
+     * @throws IOException
+     */
 
     public static boolean addContact(Context context, Contact contact) throws IOException {
         List<Contact> contacts = readContacts(context);
@@ -51,9 +84,23 @@ public class FileHandler {
         return true;
     }
 
+    /**
+     * @author: Gunjan Tomer
+     *
+     * Method to modify an existing contact in the text file when selected from ListView
+     *
+     * @param context
+     * @param contact
+     * @return boolean
+     * @throws IOException
+     */
     public static boolean modifyContact(Context context, Contact contact) throws IOException {
         List<Contact> contacts = readContacts(context);
         int index = 0;
+        /**
+         * Iterate through each contact in the list and find the index of the
+         * one that matches theo one being currently modified
+         */
         for (Contact c : contacts) {
             index += 1;
             if(contact.getFirstName().equals(c.getFirstName()) ||
@@ -77,6 +124,16 @@ public class FileHandler {
         return true;
     }
 
+    /**
+     * @author: Koulick Sankar Paul
+     *
+     * Method to delete a contact from the text file
+     *
+     * @param context
+     * @param contact
+     * @return boolean
+     * @throws IOException
+     */
     public static boolean deleteContact(Context context, Contact contact) throws IOException {
         List<Contact> contacts = readContacts(context);
         contacts.remove(contact);
@@ -92,6 +149,15 @@ public class FileHandler {
         return true;
     }
 
+    /**
+     * @author: Gunjan Tomer
+     *
+     * Method to create a new text file to store contacts
+     *
+     * @param context
+     * @return boolean
+     * @throws IOException
+     */
     public static boolean createFileIfNotPresent(Context context) throws IOException {
         File file = new File(String.valueOf(context.getFilesDir()));
         File f = new File(file, FILENAME);

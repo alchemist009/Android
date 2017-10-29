@@ -1,3 +1,25 @@
+/**
+ *
+ * Details activity screeen for Custom Contacts app
+ *
+ * @authors: Gunjan Tomer, Kouluck Sankar Paul
+ *
+ * NetIDs: gxt160930, ksp160330
+ *
+ * This activity screen is launched when the user tries to add a new contact or modify an existing contact
+ * The activity shows the four fields for user details i.e. FirstName, LastName, PhoneNumber and EmailID.
+ * Based on whether the activity is launched using the add contact icon on the MainActivity screen or by
+ * clicking on one of the contacts in the list either the Save button is displayed or the Modify-Delete buttons
+ * are displayed.
+ *
+ * If the activity is launched by clicking an item in the list of contacts on the main screen, the contact's
+ * details are used to populate the text boxes which can then be modified and saved.
+ * Clicking on any of the buttons calls the corresponding method in FileHandler.java
+ *
+ * The user can exit the activity and go back to the contacts list activity without saving or modifying anything
+ * at any time by pressing the back key in the android navigation bar.
+ */
+
 package com.example.wra1th.customphonebook;
 
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +46,13 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
     EditText firstName, lastName, emailID, phoneNumber;
     Button saveContact, modifyContact, deleteContact;
 
+    /**
+     * @author: Gunjan Tomer
+     *
+     * Method to display the text boxes for contact details and buttons based on which operation is to be performed.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +90,16 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
         ContactDetailsActivity.this.finish();
     }
 
+    /**
+     * @authors: Koulick Sankar Paul, Gunjan Tomer
+     *
+     * Method to perform an operation based on the button clicked. Each operation calls the corresponding method in FileHandler.java.
+     * Based on the success or failure of the requested operation a toast message is displayed.
+     * To prevent addition of contacts with all fields empty, a toast message is displayed when the user tries to save or modifies a
+     * contact without a FirstName.
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         String message = "";
