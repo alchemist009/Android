@@ -55,11 +55,11 @@ public class FileHandler {
         List<Contact> contacts = readContacts(context);
         int index = 0;
         for (Contact c : contacts) {
-            if(c.getFirstName().equals(contact.getFirstName()) ||
-                    c.getLastName().equals(contact.getLastName()) ||
-                    c.getEmailID().equals(contact.getEmailID()) ||
-                    c.getPhoneNumber().equals(contact.getPhoneNumber())) {
-                index++;
+            index += 1;
+            if(contact.getFirstName().equals(c.getFirstName()) ||
+                    contact.getLastName().equals(c.getLastName()) ||
+                    contact.getEmailID().equals(c.getEmailID()) ||
+                    contact.getPhoneNumber().equals(c.getPhoneNumber())) {
                 break;
             }
         }

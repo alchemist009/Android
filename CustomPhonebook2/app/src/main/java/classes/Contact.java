@@ -74,16 +74,16 @@ public class Contact implements Comparable, Serializable {
         String[] split = line.split("\\t");
         Contact c = new Contact();
 
-        if (!(split[0].substring(3)).isEmpty()) {
+        if (!(split[0].substring(3)).isEmpty() && !split[0].substring(3).equals("null")) {
             c.firstName = (split[0].substring(3)).trim();
         }
-        if (!(split[1].substring(3)).isEmpty()) {
+        if (!(split[1].substring(3)).isEmpty() && !split[1].substring(3).equals("null")) {
             c.lastName = (split[1].substring(3)).trim();
         }
-        if (!(split[2].substring(3)).isEmpty()) {
+        if (!(split[2].substring(3)).isEmpty() && !split[2].substring(3).equals("null")) {
             c.phoneNumber = (split[2].substring(3)).trim();
         }
-        if (!(split[3].substring(3)).isEmpty()) {
+        if (!(split[3].substring(3)).isEmpty() && !split[3].substring(3).equals("null")) {
             c.emailID = (split[3].substring(3)).trim();
         }
 
