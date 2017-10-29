@@ -15,12 +15,12 @@
  * or select one of the existing contacts and modify or delete it.
  *
  * Tapping the add icon takes the user to the next activity, ContactDetailsActivity which shows four fields for the
- * contact details like FirstName, LastName, PhoneNumber and EmailID along with the Save button. The user must enter
+ * contact details - FirstName, LastName, PhoneNumber and EmailID  - along with the Save button. The user must enter
  * at least the FirstName before being allowed to save. Once Save is clicked, the Contact object is passed to
  * writeContact, sorted in alphabetical order along with the existing contacts and then written to the text file.
  *
  * Tapping an item in the listView takes the user to the same activity as the Save action but with the fields populated
- * with the details from the clicked list item and the Modify and Delete buttons. The underlying functionality to add,
+ * with the details from the clicked list item and the Modify and Delete buttons visible. The underlying functionality to add,
  * delete and modify contacts is defined in FileHandler.java.
  *
  * The user can exit the activity and therefore the app anytime by pressing the back key in the android navigation bar.

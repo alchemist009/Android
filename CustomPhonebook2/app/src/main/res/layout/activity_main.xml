@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Layout file for the main activity to display an action bar at the top and a list of contacts in the main view
+<!-- Layout file for the main activity to display an action bar at the top and a list of contacts in the main view.
      @authors: Gunjan Tomer (gxt160930), Koulick Sankar Paul(ksp160330) -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

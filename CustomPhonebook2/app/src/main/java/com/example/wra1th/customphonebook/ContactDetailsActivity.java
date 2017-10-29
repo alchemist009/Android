@@ -2,7 +2,7 @@
  *
  * Details activity screeen for Custom Contacts app
  *
- * @authors: Gunjan Tomer, Kouluck Sankar Paul
+ * @authors: Gunjan Tomer, Koulick Sankar Paul
  *
  * NetIDs: gxt160930, ksp160330
  *
