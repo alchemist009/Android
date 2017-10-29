@@ -39,26 +39,11 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
 
         int operation = getIntent().getIntExtra(OPERATION, 0);
         if(operation == ADD_OPERATION) {
-            firstName.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void afterTextChanged(Editable arg0) {
-                    if (firstName.getText().toString().isEmpty()) {
-                        saveContact.setVisibility(View.GONE);
-                    }
-                }
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    saveContact.setVisibility(View.VISIBLE);
-                }
-            });
+            saveContact.setVisibility(View.VISIBLE);
             modifyContact.setVisibility(View.GONE);
             deleteContact.setVisibility(View.GONE);
-        } else if(operation == MODIFY_OPERATION) {
+        }
+        else if(operation == MODIFY_OPERATION) {
             Contact contact;
             saveContact.setVisibility(View.GONE);
             modifyContact.setVisibility(View.VISIBLE);
@@ -81,6 +66,11 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
         String message = "";
         switch (view.getId()) {
             case R.id.b_save:
+                if (firstName.getText().toString().isEmpty()) {
+                    message = "Please add first name";
+                    Toast.makeText(ContactDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 Contact c = new Contact(firstName.getText().toString(),
                         lastName.getText().toString(),
                         phoneNumber.getText().toString(),
@@ -98,6 +88,11 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
                 break;
 
             case R.id.b_modify:
+                if (firstName.getText().toString().isEmpty()) {
+                    message = "Please add first name";
+                    Toast.makeText(ContactDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 c = new Contact(firstName.getText().toString(),
                         lastName.getText().toString(),
                         phoneNumber.getText().toString(),
