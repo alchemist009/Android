@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
 
     /**
-     * @author: Gunjan Tomer
+     * @author: Koulick Sankar Paul
      *
      * Method to handle a click on one of the contacts in the list
      */
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     /**
-     * @author: Koulick Sankar Paul
+     * @author: Gunjan Tomer
      *
      * Method to perform add contact operation when add icon clicked in the action bar
      * @param item

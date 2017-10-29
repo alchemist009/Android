@@ -1,5 +1,5 @@
 /**
- * Helper class to create objects for contacts and implement custom method like toString(),
+ * Helper class to create objects for contact details and implement custom method like toString(),
  * compareTo(), and equals() for them.
  *
  * @authors: Gunjan Tomer, Koulick Sankar Paul
@@ -13,11 +13,6 @@ package classes;
 import android.support.annotation.NonNull;
 import java.io.Serializable;
 
-/**
- * @authors: Koulick Sankar Paul, Gunjan Tomer
- *
- * Class to store contact details as objects
- */
 
 public class Contact implements Comparable, Serializable {
     private String firstName, lastName;

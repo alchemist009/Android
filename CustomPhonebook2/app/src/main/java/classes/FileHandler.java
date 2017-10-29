@@ -55,7 +55,7 @@ public class FileHandler {
     }
 
     /**
-     * @author: Koulick Sankar Paul
+     * @author: Gunjan Tomer
      *
      * Method to add a new contact to the text file using an object
      *
@@ -81,7 +81,7 @@ public class FileHandler {
     }
 
     /**
-     * @author: Gunjan Tomer
+     * @author: Koulick Sankar Paul
      *
      * Method to modify an existing contact in the text file when selected from ListView
      *
@@ -95,7 +95,7 @@ public class FileHandler {
         int index = 0;
         /**
          * Iterate through each contact in the list and find the index of the
-         * one that matches theo one being currently modified
+         * one that matches the one being currently modified
          */
         for (Contact c : contacts) {
             index += 1;
