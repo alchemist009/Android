@@ -40,9 +40,11 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
     public static final int MODIFY_OPERATION = 2;
     public static final String OPERATION = "OPERATION";
     public static final String CONTACT = "CONTACT";
+    public static final String POSITION = "POSITION";
 
     EditText firstName, lastName, emailID, phoneNumber;
     Button saveContact, modifyContact, deleteContact;
+    int position;
 
     /**
      * @author: Gunjan Tomer
@@ -76,6 +78,7 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
             modifyContact.setVisibility(View.VISIBLE);
             deleteContact.setVisibility(View.VISIBLE);
             contact = (Contact) getIntent().getSerializableExtra(CONTACT);
+            position = (int) getIntent().getSerializableExtra(POSITION);
             firstName.setText(contact.getFirstName());
             lastName.setText(contact.getLastName());
             phoneNumber.setText(contact.getPhoneNumber());
@@ -141,7 +144,7 @@ public class ContactDetailsActivity extends AppCompatActivity implements View.On
                         phoneNumber.getText().toString(),
                         emailID.getText().toString());
                 try {
-                    FileHandler.modifyContact(ContactDetailsActivity.this, c);
+                    FileHandler.modifyContact(ContactDetailsActivity.this, c, position);
                     message = "Contact modified";
                 } catch (IOException ex) {
                     ex.printStackTrace();

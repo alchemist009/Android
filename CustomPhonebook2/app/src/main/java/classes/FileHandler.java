@@ -90,13 +90,16 @@ public class FileHandler {
      * @return boolean
      * @throws IOException
      */
-    public static boolean modifyContact(Context context, Contact contact) throws IOException {
+    public static boolean modifyContact(Context context, Contact contact, int position) throws IOException {
         List<Contact> contacts = readContacts(context);
+
+        /*
         int index = 0;
+         */
         /**
          * Iterate through each contact in the list and find the index of the
          * one that matches the one being currently modified
-         */
+
         for (Contact c : contacts) {
             index += 1;
             if(contact.getFirstName().equals(c.getFirstName()) ||
@@ -107,6 +110,15 @@ public class FileHandler {
             }
         }
         contacts.remove(index-1);
+        */
+        int index = 0;
+        for (Contact c : contacts) {
+            if (index == position) {
+                break;
+            }
+            index += 1;
+        }
+        contacts.remove(index);
         contacts.add(contact);
         Collections.sort(contacts);
         FileOutputStream stream = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);

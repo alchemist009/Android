@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                     Intent intent = new Intent(MainActivity.this, ContactDetailsActivity.class);
                     intent.putExtra(ContactDetailsActivity.OPERATION, ContactDetailsActivity.MODIFY_OPERATION);
                     intent.putExtra(ContactDetailsActivity.CONTACT, contact);
+                    intent.putExtra(ContactDetailsActivity.POSITION, position);
                     startActivity(intent);
                 }
             });
