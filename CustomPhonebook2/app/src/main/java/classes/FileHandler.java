@@ -99,18 +99,8 @@ public class FileHandler {
         /**
          * Iterate through each contact in the list and find the index of the
          * one that matches the one being currently modified
-
-        for (Contact c : contacts) {
-            index += 1;
-            if(contact.getFirstName().equals(c.getFirstName()) ||
-                    contact.getLastName().equals(c.getLastName()) ||
-                    contact.getEmailID().equals(c.getEmailID()) ||
-                    contact.getPhoneNumber().equals(c.getPhoneNumber())) {
-                break;
-            }
-        }
-        contacts.remove(index-1);
         */
+
         int index = 0;
         for (Contact c : contacts) {
             if (index == position) {
