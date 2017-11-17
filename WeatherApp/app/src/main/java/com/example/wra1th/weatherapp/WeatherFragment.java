@@ -103,11 +103,14 @@ public class WeatherFragment extends Fragment {
     private void setWeatherIcon(int actualId, long sunrise, long sunset){
         int id = actualId / 100;
         String icon = "";
-        if(actualId == 800){
+        if(actualId == 800) {
             long currentTime = new Date().getTime();
-            if(currentTime >= sunrise && currentTime < sunset){
+            if (currentTime >= sunrise && currentTime < sunset) {
                 icon = getActivity().getString(R.string.weather_sunny);
+            } else {
+                icon = getActivity().getString(R.string.weather_clear_night);
             }
+        }
             else{
                 switch (id){
                     case 2 : icon = getActivity().getString(R.string.weather_thunder);
@@ -126,7 +129,7 @@ public class WeatherFragment extends Fragment {
             }
             weatherIcon.setText(icon);
         }
-    }
+    
 
     public void changeCity(String city){
         updateWeatherData(city);
