@@ -28,9 +28,15 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.change_city){
-            showInputDialog();
+        switch (item.getItemId()){
+
+            case R.id.change_city : showInputDialog();
+
+            case R.id.settings : return false;
+
+            case R.id.about : return false;
         }
+
         return false;
     }
 
