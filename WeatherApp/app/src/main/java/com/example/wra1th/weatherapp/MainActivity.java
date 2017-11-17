@@ -1,6 +1,7 @@
 package com.example.wra1th.weatherapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.change_city : showInputDialog();
 
-            case R.id.settings : return false;
+            case R.id.settings : Intent i = new Intent(this, PreferencesActivity.class);
+                                 startActivity(i);
 
             case R.id.about : return false;
         }
