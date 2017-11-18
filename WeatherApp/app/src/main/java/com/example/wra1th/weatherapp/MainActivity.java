@@ -32,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.change_city : showInputDialog();
+                                    break;
 
             case R.id.settings : Intent i = new Intent(this, PreferencesActivity.class);
                                  startActivity(i);
+                                 break;
 
             case R.id.about : return false;
         }
