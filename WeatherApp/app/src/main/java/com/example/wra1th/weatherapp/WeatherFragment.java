@@ -43,13 +43,13 @@ public class WeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         weatherFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/weather.ttf");
-        updateWeatherData(new CitySelected(getActivity()).getCity());
+        updateWeatherData(new CitySelected(getActivity()).getCity(), new SettingsActivity(getActivity()).getScale());
         }
 
-    private void updateWeatherData(final String city){
+    private void updateWeatherData(final String city, final String scale){
         new Thread(){
             public void run(){
-                final JSONObject json = FetchInfo.getJSON(getActivity(), city);
+                final JSONObject json = FetchInfo.getJSON(getActivity(), city, scale);
                 if(json == null){
                     handler.post(new Runnable() {
                         @Override
@@ -131,9 +131,11 @@ public class WeatherFragment extends Fragment {
         }
 
 
-    public void changeCity(String city){
-        updateWeatherData(city);
+    public void changeSettings(String city){
+        updateWeatherData(city, "imperial");
     }
+
+    public void changeSettings(String city, String scale) { updateWeatherData(city, scale);}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -16,12 +16,13 @@ import java.net.URL;
 
 public class FetchInfo {
 
-    private static final String OPEN_WEATHER_MAP_API = "http://api.openweathermap.org/data/2.5/weather?q=%s&units=imperial";
+    private static final String OPEN_WEATHER_MAP_API_CITY = "http://api.openweathermap.org/data/2.5/weather?q=%s&units=%s";
+    private static final String OPEN_WEATHER_MAP_API_COORD = "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s";
 
-    public static JSONObject getJSON(Context context, String city){
+    public static JSONObject getJSON(Context context, String city, String scale){
 
         try{
-            URL url = new URL(String.format(OPEN_WEATHER_MAP_API, city));
+            URL url = new URL(String.format(OPEN_WEATHER_MAP_API_CITY, city, scale));
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
             connection.addRequestProperty("x-api-key", context.getString(R.string.open_weather_maps_app_id));
