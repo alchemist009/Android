@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Movie Quiz</string>
+    <string name="quizDescription">Hollywood Movie Trivia Quiz</string>
+
+    <string name="play">PLAY</string>
+    <string name="options">OPTIONS</string>
+    <string name="rules">RULES</string>
+
+    <string name="rulesToDisplay">Here are the rules to play the game:</string>
+    <string name="rulesBulletList">
+        <![CDATA[
+                 <p>
+                    &#8226;There are only <b>TWO</b> chances to guess the correct answer
+                    <br />
+                    <br />
+                    <br />
+                    &#8226;Swipe <b>RIGHT</b> to go to the next question
+                    <br />
+                    <br />
+                    <br />
+                    &#8226;You can <b>SHAKE</b> the phone to get a hint for the current question
+                 </p>]]>
+    </string>
+
+    <string name="numberOfQuestions">Number of questions to answer: </string>
+    <string name="radio5">5</string>
+    <string name="radio10">10</string>
+    <string name="radio15">15</string>
+
+    <string name="difficultyLevel">Difficulty Level: </string>
+    <string name="radioLevelOne">Casual film watcher</string>
+    <string name="radioLevelTwo">I know my stuff</string>
+    <string name="radioLevelThree">Legendary</string>
+
+    <string name="sound">Sound: </string>
+    <string name="radioSoundOn">On</string>
+    <string name="radioSoundOff">Off</string>
+
+    <string name="optionsSet">Set</string>
+
+    <string name="score">Score: </string>
+    <string name="zeroScore">0</string>
+
+    <string name="playAgain">Want to play again?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+</resources>

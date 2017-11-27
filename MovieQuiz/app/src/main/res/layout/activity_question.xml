@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Layout file for the question activity showing the question, the four answer choice buttons.
+Also, a score text view is present on the right hand corner.
+     @author: Koulick Sankar Paul(ksp160330) -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.utd.ksp160330.moviequiz.QuestionActivity"
+    android:background="#F0E68C"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/scoreLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/score"
+            android:fontFamily="sans-serif"
+            android:textSize="20sp"
+            android:layout_marginRight="20sp"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/scoreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zeroScore"
+            android:fontFamily="sans-serif"
+            android:textSize="20sp"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textSize="20sp"
+        android:padding="30sp"/>
+
+    <LinearLayout
+        android:id="@+id/questionLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:weightSum="4"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/optionOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:padding="30sp"
+            android:textAlignment="center"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/optionTwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:padding="30sp"
+            android:layout_marginTop="10sp"
+            android:textAlignment="center"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/optionThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:padding="30sp"
+            android:layout_marginTop="10sp"
+            android:textAlignment="center"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/optionFour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:padding="30sp"
+            android:layout_marginTop="10sp"
+            android:textAlignment="center"
+            android:onClick="onClick"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
