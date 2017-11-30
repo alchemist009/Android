@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Layout file for the main activity showing the app description text view, and the three buttons - Play, Options, and Rules.
+     @author: Koulick Sankar Paul(ksp160330) -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.utd.ksp160330.moviequiz.MainActivity"
+    android:background="#F0E68C"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quizDescription"
+        android:fontFamily="sans-serif"
+        android:textSize="20sp"
+        android:padding="20sp"
+        android:textStyle="bold"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="6"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/b_play"
+            android:text="@string/play"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:onClick="onClick"
+            android:backgroundTint="@color/colorWhite"/>
+
+        <Button
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/b_options"
+            android:text="@string/options"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:onClick="onClick"
+            android:backgroundTint="@color/colorWhite"/>
+
+        <Button
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/b_rules"
+            android:text="@string/rules"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:onClick="onClick"
+            android:backgroundTint="@color/colorWhite"/>
+
+    </LinearLayout>
+
+</LinearLayout>

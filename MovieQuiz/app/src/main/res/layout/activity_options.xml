@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Layout file for the options activity showing the three text views, and the three radio groups.
+     @author: Koulick Sankar Paul(ksp160330) -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.utd.ksp160330.moviequiz.OptionsActivity"
+    android:background="#F0E68C">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="6"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/numberOfQuestions"
+            android:paddingLeft="60sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="10sp"
+            android:fontFamily="sans-serif"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/radioNumberOfQuestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50sp">
+
+            <RadioButton
+                android:id="@+id/radio5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio5"
+                android:checked="true"
+                android:textSize="18sp"/>
+
+            <RadioButton
+                android:id="@+id/radio10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio10"
+                android:textSize="18sp"/>
+
+            <RadioButton
+                android:id="@+id/radio15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio15"
+                android:textSize="18sp"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/difficultyLevel"
+            android:paddingLeft="60sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="10sp"
+            android:fontFamily="sans-serif"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/radioDifficultyLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50sp">
+
+            <RadioButton
+                android:id="@+id/radioLevelOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioLevelOne"
+                android:checked="true"
+                android:textSize="18sp"/>
+
+            <RadioButton
+                android:id="@+id/radioLevelTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioLevelTwo"
+                android:textSize="18sp"/>
+
+            <RadioButton
+                android:id="@+id/radioLevelThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioLevelThree"
+                android:textSize="18sp"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sound"
+            android:paddingLeft="60sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="10sp"
+            android:fontFamily="sans-serif"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/radioSound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50sp">
+
+            <RadioButton
+                android:id="@+id/radioSoundOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioSoundOn"
+                android:checked="true"
+                android:textSize="18sp"/>
+
+            <RadioButton
+                android:id="@+id/radioSoundOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioSoundOff"
+                android:textSize="18sp"/>
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/b_Set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/optionsSet"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:onClick="onClick"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
