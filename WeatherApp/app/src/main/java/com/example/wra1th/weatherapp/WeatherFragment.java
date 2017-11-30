@@ -2,7 +2,6 @@ package com.example.wra1th.weatherapp;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -14,15 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import Classes.CitySelected;
+import Classes.FetchInfo;
+import Classes.SettingsActivity;
+
 
 public class WeatherFragment extends Fragment {
 
+    private static String FILENAME = "weatherOInfo.json";
     Typeface weatherFont;
 
     TextView cityField;
@@ -48,9 +53,9 @@ public class WeatherFragment extends Fragment {
 
     private void updateWeatherData(final String city, final String scale){
         new Thread(){
-            public void run(){
+            public void run() {
                 final JSONObject json = FetchInfo.getJSON(getActivity(), city, scale);
-                if(json == null){
+                if (json == null) {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -58,8 +63,7 @@ public class WeatherFragment extends Fragment {
                                     getActivity().getString(R.string.place_not_found), Toast.LENGTH_LONG).show();
                         }
                     });
-                }
-                else{
+                } else {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -67,10 +71,21 @@ public class WeatherFragment extends Fragment {
                         }
                     });
                 }
+
+
             }
 
         }.start();
 
+    }
+
+    public static boolean createFileIfNotPresent(Context context) throws IOException {
+        File file = new File(String.valueOf(context.getFilesDir()));
+        File f = new File(file, FILENAME);
+        if(!f.exists()) {
+            f.createNewFile();
+        }
+        return true;
     }
 
     private void renderWeather(JSONObject json){
@@ -98,6 +113,7 @@ public class WeatherFragment extends Fragment {
             Log.e("WeatherApp", "One or more details not found in the JSON data");
 
         }
+
     }
 
     private void setWeatherIcon(int actualId, long sunrise, long sunset){
@@ -150,6 +166,7 @@ public class WeatherFragment extends Fragment {
         weatherIcon.setTypeface(weatherFont);
         return rootView;
     }
+
 
 
 }

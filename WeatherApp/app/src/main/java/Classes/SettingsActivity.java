@@ -1,4 +1,4 @@
-package com.example.wra1th.weatherapp;
+package Classes;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -16,11 +16,11 @@ public class SettingsActivity {
         preferences = activity.getPreferences(Activity.MODE_PRIVATE);
     }
 
-    String getScale(){
+    public String getScale(){
         return preferences.getString("scale", "imperial");
     }
 
-    void setScale(String scale){
+    public void setScale(String scale){
         preferences.edit().putString("scale", scale).commit();
     }
 

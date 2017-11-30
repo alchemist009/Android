@@ -1,15 +1,20 @@
-package com.example.wra1th.weatherapp; /**
+package Classes; /**
  * Created by wra1th on 11/16/2017.
  */
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.example.wra1th.weatherapp.R;
 
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -41,6 +46,7 @@ public class FetchInfo {
             if(data.getInt("cod") != 200){
                 return null;
             }
+
 
             return data;
         }catch(Exception e){

@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import Classes.CitySelected;
+import Classes.SettingsActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

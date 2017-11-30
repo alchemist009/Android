@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PreferencesActivity"
+    android:background="#F0E68C"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="6"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="Enable GPS usage"
+            android:paddingStart="60sp"
+            android:paddingEnd="5sp"
+            android:paddingTop="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15sp"
+            android:gravity="end"
+            android:text="Switch"
+            tools:layout_editor_absoluteX="128dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose scale: "
+            android:paddingStart="60sp"
+            android:paddingEnd="5sp"
+            android:paddingTop="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/FScale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="°F" />
+
+            <RadioButton
+                android:id="@+id/CScale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="°C" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+</LinearLayout>

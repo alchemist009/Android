@@ -1,4 +1,4 @@
-package com.example.wra1th.weatherapp;
+package Classes;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -15,11 +15,11 @@ public class CitySelected {
         preferences = activity.getPreferences(Activity.MODE_PRIVATE);
     }
 
-    String getCity(){
+    public String getCity(){
         return preferences.getString("city", "Dallas, US");
     }
 
-    void setCity(String city){
+    public void setCity(String city){
         preferences.edit().putString("city", city).commit();
     }
 }
