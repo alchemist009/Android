@@ -1,46 +1,167 @@
 package com.example.wra1th.weatherapp;
 
-import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import Classes.CitySelected;
-import Classes.SettingsActivity;
-
-import static com.example.wra1th.weatherapp.WeatherFragment.SCALE_USED;
+import Classes.FetchInfo;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String SCALE_USED = "SCALE_USED";
+    Typeface weatherFont;
+
+    TextView cityField;
+    TextView updatedField;
+    TextView detailsField;
+    TextView currentTemperatureField;
+    TextView weatherIcon;
+    Handler handler;
+    Context context = this;
+
     public static String TEMPERATURE_SCALE = "TEMPERATURE_SCALE";
     public static final String USE_GPS = "USE_GPS";
+
+    public MainActivity() { handler = new Handler();}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new WeatherFragment()).commit();
+        weatherFont = Typeface.createFromAsset(this.getAssets(), "fonts/weather.ttf");
+        int unit = 0;
+        String scale = "";
+//        if(bundle != null){
+//            unit = bundle.getInt(SCALE_USED, 0);
+//        }
+        if(unit == 0){
+            scale = "imperial";
         }
-        else{
-            int scale_used_index = 0;
-            if(getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null) {
-                scale_used_index = (int) getIntent().getSerializableExtra(TEMPERATURE_SCALE);
-                WeatherFragment weatherFragment = new WeatherFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt(SCALE_USED, scale_used_index);
-                weatherFragment.setArguments(bundle);
+        else
+            scale = "metric";
+        updateWeatherData(new CitySelected(MainActivity.this).getCity(), scale);
+        showWeather();
+
+    }
+
+    private void updateWeatherData(final String city, final String scale){
+        new Thread(){
+            public void run() {
+                final JSONObject json = FetchInfo.getJSON(context, city, scale);
+                if (json == null) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, getString(R.string.place_not_found), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            renderWeather(json);
+                        }
+                    });
+                }
+
             }
+
+        }.start();
+
+    }
+
+
+    private void renderWeather(JSONObject json){
+        try{
+            cityField.setText(json.getString("name").toUpperCase(Locale.US) + "," +
+                    json.getJSONObject("sys").getString("country"));
+
+            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
+            JSONObject main = json.getJSONObject("main");
+            detailsField.setText(details.getString("description").toUpperCase(Locale.US) + "\n" +
+                    "Humidity: " + main.getString("humidity").toUpperCase(Locale.US) + "\n" +
+                    "Pressure: " + main.getString("pressure") + "hPa");
+
+            currentTemperatureField.setText(String.format("%.2f", main.getDouble("temp")) + " °F");
+
+            DateFormat df = DateFormat.getDateTimeInstance();
+            String updatedOn = df.format(new Date(json.getLong("dt")*1000));
+            updatedField.setText("Last update: " + updatedOn);
+
+            setWeatherIcon(details.getInt("id"),
+                    json.getJSONObject("sys").getLong("sunrise")*1000,
+                    json.getJSONObject("sys").getLong("sunset")*1000);
+        }
+        catch (Exception e){
+            Log.e("WeatherApp", "One or more details not found in the JSON data");
+
         }
 
+    }
+
+
+
+    private void setWeatherIcon(int actualId, long sunrise, long sunset){
+        int id = actualId / 100;
+        String icon = "";
+        if(actualId == 800) {
+            long currentTime = new Date().getTime();
+            if (currentTime >= sunrise && currentTime < sunset) {
+                icon = this.getString(R.string.weather_sunny);
+            } else {
+                icon = this.getString(R.string.weather_clear_night);
+            }
+        }
+        else{
+            switch (id){
+                case 2 : icon = this.getString(R.string.weather_thunder);
+                    break;
+                case 3 : icon = this.getString(R.string.weather_drizzle);
+                    break;
+                case 5 : icon = this.getString(R.string.weather_rainy);
+                    break;
+                case 6 : icon = this.getString(R.string.weather_snowy);
+                    break;
+                case 7 : icon = this.getString(R.string.weather_foggy);
+                    break;
+                case 8 : icon = this.getString(R.string.weather_cloudy);
+                    break;
+            }
+        }
+        weatherIcon.setText(icon);
+    }
+
+
+    public void showWeather() {
+        //View rootView = inflater.inflate(R.layout.fragment_weather, container, false);
+        cityField = findViewById(R.id.city_field);
+        updatedField = findViewById(R.id.updated_field);
+        detailsField = findViewById(R.id.details_field);
+        currentTemperatureField = findViewById(R.id.current_temperature_field);
+        weatherIcon = findViewById(R.id.weather_icon);
+
+        weatherIcon.setTypeface(weatherFont);
     }
 
     @Override
@@ -83,18 +204,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeCity(String city){
-        WeatherFragment wf = (WeatherFragment) getSupportFragmentManager().findFragmentById(R.id.container);
 
-        wf.changeSettings(city);
+
+        changeSettings(city);
         new CitySelected(this).setCity(city);
     }
 
-    public void changeSettings(String city, String scale){
-        WeatherFragment wf = (WeatherFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+    public void changeSettings(String city) { updateWeatherData(city, "imperial");}
 
-        wf.changeSettings(city, scale);
-
-        new CitySelected(this).setCity(city);
-        new SettingsActivity(this).setScale(scale);
-    }
 }
