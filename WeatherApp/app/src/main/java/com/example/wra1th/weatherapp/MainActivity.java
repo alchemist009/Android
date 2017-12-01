@@ -1,5 +1,6 @@
 package com.example.wra1th.weatherapp;
 
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -8,12 +9,18 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import Classes.CitySelected;
 import Classes.SettingsActivity;
 
+import static com.example.wra1th.weatherapp.WeatherFragment.SCALE_USED;
+
 public class MainActivity extends AppCompatActivity {
+
+    public static String TEMPERATURE_SCALE = "TEMPERATURE_SCALE";
+    public static final String USE_GPS = "USE_GPS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,17 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().add(R.id.container, new WeatherFragment()).commit();
         }
+        else{
+            int scale_used_index = 0;
+            if(getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null) {
+                scale_used_index = (int) getIntent().getSerializableExtra(TEMPERATURE_SCALE);
+                WeatherFragment weatherFragment = new WeatherFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(SCALE_USED, scale_used_index);
+                weatherFragment.setArguments(bundle);
+            }
+        }
+
     }
 
     @Override
@@ -33,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
+
+
 
             case R.id.change_city : showInputDialog();
                                     break;

@@ -1,10 +1,12 @@
 package com.example.wra1th.weatherapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,8 @@ import Classes.SettingsActivity;
 public class WeatherFragment extends Fragment {
 
     private static String FILENAME = "weatherOInfo.json";
+
+    public static String SCALE_USED = "SCALE_USED";
     Typeface weatherFont;
 
     TextView cityField;
@@ -35,7 +39,6 @@ public class WeatherFragment extends Fragment {
     TextView detailsField;
     TextView currentTemperatureField;
     TextView weatherIcon;
-
     Handler handler;
 
 
@@ -48,7 +51,18 @@ public class WeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         weatherFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/weather.ttf");
-        updateWeatherData(new CitySelected(getActivity()).getCity(), new SettingsActivity(getActivity()).getScale());
+        Bundle bundle = this.getArguments();
+        int unit = 0;
+        String scale = "";
+        if(bundle != null){
+            unit = bundle.getInt(SCALE_USED, 0);
+        }
+        if(unit == 0){
+            scale = "imperial";
+        }
+        else
+            scale = "metric";
+        updateWeatherData(new CitySelected(getActivity()).getCity(), scale);
         }
 
     private void updateWeatherData(final String city, final String scale){
@@ -166,7 +180,6 @@ public class WeatherFragment extends Fragment {
         weatherIcon.setTypeface(weatherFont);
         return rootView;
     }
-
 
 
 }

@@ -19,21 +19,20 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="Enable GPS usage"
-            android:paddingStart="60sp"
+            android:layout_gravity="start"
+            android:text="@string/gps_toggle_text"
+            android:paddingStart="10sp"
             android:paddingEnd="5sp"
             android:paddingTop="20sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif" />
+            android:fontFamily="sans-serif"
+            android:textSize="20sp"/>
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/toggleGPS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15sp"
             android:gravity="end"
-            android:text="Switch"
             tools:layout_editor_absoluteX="128dp"
             tools:layout_editor_absoluteY="8dp" />
 
@@ -49,16 +48,18 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose scale: "
-            android:paddingStart="60sp"
+            android:text="@string/scale_choice"
+            android:paddingStart="10sp"
             android:paddingEnd="5sp"
             android:paddingTop="20sp"
             android:textStyle="bold"
+            android:textSize="20sp"
             android:fontFamily="sans-serif"/>
 
         <RadioGroup
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/radioTempScale">
 
             <RadioButton
                 android:id="@+id/FScale"
