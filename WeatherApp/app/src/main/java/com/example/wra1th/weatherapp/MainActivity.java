@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,9 +39,12 @@ public class MainActivity extends AppCompatActivity {
     TextView weatherIcon;
     Handler handler;
     Context context = this;
+    int scaleIndex;
+    String scaleUsed;
 
     public static String TEMPERATURE_SCALE = "TEMPERATURE_SCALE";
     public static final String USE_GPS = "USE_GPS";
+    private SwipeRefreshLayout  swipeRefreshLayout;
 
     public MainActivity() { handler = new Handler();}
 
@@ -48,22 +52,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateWeatherData(new CitySelected(MainActivity.this).getCity(), scaleUsed);
+                showWeather();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        if(getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null){
+            scaleIndex = (int) getIntent().getSerializableExtra(TEMPERATURE_SCALE);
+        }
+
+        if(scaleIndex == 1)
+            scaleUsed = "metric";
+        else
+            scaleUsed = "imperial";
 
         weatherFont = Typeface.createFromAsset(this.getAssets(), "fonts/weather.ttf");
-        int unit = 0;
-        String scale = "";
-//        if(bundle != null){
-//            unit = bundle.getInt(SCALE_USED, 0);
-//        }
-        if(unit == 0){
-            scale = "imperial";
-        }
-        else
-            scale = "metric";
-        updateWeatherData(new CitySelected(MainActivity.this).getCity(), scale);
+        updateWeatherData(new CitySelected(MainActivity.this).getCity(), scaleUsed);
         showWeather();
 
     }
+
 
     private void updateWeatherData(final String city, final String scale){
         new Thread(){
@@ -150,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         weatherIcon.setText(icon);
+        showWeather();
     }
 
 
@@ -172,8 +185,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-
-
+            case R.id.refresh :
+                updateWeatherData(new CitySelected(MainActivity.this).getCity(), "imperial");
+                showWeather();
+                break;
 
             case R.id.change_city : showInputDialog();
                                     break;
@@ -211,5 +226,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeSettings(String city) { updateWeatherData(city, "imperial");}
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        int unit = -1;
+        String scale;
+        Intent intent = getIntent();
+        scaleIndex = intent.getIntExtra(TEMPERATURE_SCALE, 0);
+        if(intent.hasExtra(TEMPERATURE_SCALE)) {
+            unit = scaleIndex;
+        }
+        else
+            unit = 0;
+        if(unit == 0){
+            scale = "imperial";
+        }
+        else
+            scale = "metric";
+        Toast.makeText(context, "unit = " + Integer.toString(unit), Toast.LENGTH_LONG).show();
+        updateWeatherData(new CitySelected(MainActivity.this).getCity(), scale);
+        showWeather();
+    }
+
+
+    public void swipeToRefresh(){
+
+    }
 
 }
