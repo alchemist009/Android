@@ -24,7 +24,8 @@
     <string name="gps_toggle_text">Toggle to enable GPS use</string>
     <string name="scale_choice">Choose the desired temperature scale</string>
     <string name="choose_city">Select a city</string>
-    <string name="search_box">Enter the desired city</string>
+    <string name="search_box">Enter a city</string>
     <string name="recent_places">Recent locations</string>
+    <string name="city_chosen">City</string>
 
 </resources>

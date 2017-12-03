@@ -30,7 +30,11 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".LocationActivity"></activity>
+        <activity android:name=".LocationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

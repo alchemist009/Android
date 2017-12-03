@@ -30,10 +30,5 @@
         android:title="@string/about"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/location"
-        android:orderInCategory="5"
-        android:title="Location"
-        app:showAsAction="never" />
 
 </menu>

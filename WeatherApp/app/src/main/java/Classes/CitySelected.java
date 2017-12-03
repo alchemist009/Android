@@ -22,4 +22,12 @@ public class CitySelected {
     public void setCity(String city){
         preferences.edit().putString("city", city).commit();
     }
+
+    public void setScale(String scale) {
+        preferences.edit().putString("scale", scale).commit();
+    }
+
+    public String getScale() {
+        return preferences.getString("scale", "imperial");
+    }
 }

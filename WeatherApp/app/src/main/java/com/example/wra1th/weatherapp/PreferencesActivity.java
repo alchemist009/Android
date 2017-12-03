@@ -21,7 +21,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     private RadioButton radioFahrenheit;
     private RadioButton radioCelsius;
     private Switch switchGPS;
-    private int scaleSelected;
+    private String scaleSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +35,16 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v){
 
-        radioTemperatureScale.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                RadioButton checkedRadioButton = (RadioButton) findViewById(checkedId);
-                String text = checkedRadioButton.getText().toString();
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-            }
-        });
-        scaleSelected = radioTemperatureScale.getCheckedRadioButtonId();
+        if(radioTemperatureScale.getCheckedRadioButtonId() == -1)
+        {}
+        else
+        {
+            if(radioCelsius.isChecked())
+                scaleSelected = "metric";
+            else
+                scaleSelected = "imperial";
+        }
+
     }
 
     @Override
