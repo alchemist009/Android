@@ -53,4 +53,35 @@ public class FetchInfo {
             return null;
         }
     }
+
+
+    public static JSONObject getJSON(Context context, Double latitude, Double longitude){
+
+        try{
+            URL url = new URL(String.format(OPEN_WEATHER_MAP_API_COORD, Double.toString(latitude), Double.toString(longitude)));
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+
+            connection.addRequestProperty("x-api-key", context.getString(R.string.open_weather_maps_app_id));
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+            StringBuffer json = new StringBuffer(1024);
+            String tmp = "";
+
+            while((tmp=reader.readLine())!=null)
+                json.append(tmp).append("\n");
+            reader.close();
+
+            JSONObject data = new JSONObject(json.toString());
+
+            if(data.getInt("cod") != 200){
+                return null;
+            }
+
+
+            return data;
+        }catch(Exception e){
+            return null;
+        }
+    }
 }
