@@ -7,11 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -36,13 +32,6 @@ import java.util.Date;
 import java.util.Locale;
 import Classes.CitySelected;
 import Classes.FetchInfo;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,7 +69,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
+        if (getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null) {
+            scaleIndex = (int) getIntent().getSerializableExtra(TEMPERATURE_SCALE);
+        }
+
+        if (scaleIndex == 2)
+            scaleUsed = "metric";
+        else
+            scaleUsed = "imperial";
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -94,14 +93,6 @@ public class MainActivity extends AppCompatActivity {
             latitude =  (Double) getIntent().getSerializableExtra(LATITUDE);
             longitude = (Double) getIntent().getSerializableExtra(LONGITUDE);
         }
-        if (getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null) {
-            scaleIndex = (int) getIntent().getSerializableExtra(TEMPERATURE_SCALE);
-        }
-
-        if (scaleIndex == 1)
-            scaleUsed = "metric";
-        else
-            scaleUsed = "imperial";
 
         weatherFont = Typeface.createFromAsset(this.getAssets(), "fonts/weather.ttf");
         weatherInfo.updateWeatherData(new CitySelected(MainActivity.this).getCity(), scaleUsed);
@@ -207,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             longitude = (Double) getIntent().getSerializableExtra(LONGITUDE);
         }
 
-        weatherInfo.updateWeatherData(latitude, longitude);
+        weatherInfo.updateWeatherData(latitude, longitude, scaleUsed);
     }
 
     public void verifyStoragePermissions(Activity activity) {
@@ -273,10 +264,10 @@ public class MainActivity extends AppCompatActivity {
             }.start();
         }
 
-        private void updateWeatherData(final Double latitude, final Double longitude) {
+        private void updateWeatherData(final Double latitude, final Double longitude, final String scale) {
             new Thread() {
                 public void run() {
-                    final JSONObject json = FetchInfo.getJSON(context, latitude, longitude);
+                    final JSONObject json = FetchInfo.getJSON(context, latitude, longitude, scale);
                     if (json == null) {
                         handler.post(new Runnable() {
                             @Override

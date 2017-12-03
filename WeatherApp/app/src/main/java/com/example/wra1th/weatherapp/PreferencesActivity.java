@@ -20,8 +20,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     private RadioGroup radioTemperatureScale;
     private RadioButton radioFahrenheit;
     private RadioButton radioCelsius;
-
     private Switch switchGPS;
+    private int scaleSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +43,25 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
             }
         });
-        int scaleSelected = radioTemperatureScale.getCheckedRadioButtonId();
+        scaleSelected = radioTemperatureScale.getCheckedRadioButtonId();
+    }
 
-        Log.d("Scale selected is:     ",Integer.toString(scaleSelected));
+    @Override
+    public void onBackPressed(){
+        passSettingsIntent();
+        PreferencesActivity.this.finish();
+    }
+
+    public void passSettingsIntent() {
+
         boolean useGPS = switchGPS.isChecked();
-
-        Intent intent = new Intent(PreferencesActivity.this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(MainActivity.TEMPERATURE_SCALE, scaleSelected);
         intent.putExtra(MainActivity.USE_GPS, useGPS);
 
         startActivity(intent);
-    }
 
-    @Override
-    public void onBackPressed(){
-        PreferencesActivity.this.finish();
     }
 
 }
