@@ -27,5 +27,6 @@
     <string name="search_box">Enter a city</string>
     <string name="recent_places">Recent locations</string>
     <string name="city_chosen">City</string>
+    <string name="set">SET</string>
 
 </resources>

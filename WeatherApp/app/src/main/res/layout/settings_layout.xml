@@ -58,7 +58,8 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radioTempScale">
+            android:id="@+id/radioTempScale"
+            android:onClick="onClick">
 
             <RadioButton
                 android:id="@+id/FScale"
@@ -75,5 +76,13 @@
         </RadioGroup>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/set"
+        android:onClick="onClick"/>
 
 </LinearLayout>

@@ -22,18 +22,39 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     private RadioButton radioCelsius;
     private Switch switchGPS;
     private String scaleSelected;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_layout);
-
+        intent = new Intent(this, MainActivity.class);
         radioTemperatureScale = findViewById(R.id.radioTempScale);
+        radioFahrenheit = findViewById(R.id.FScale);
+        radioCelsius = findViewById(R.id.CScale);
         switchGPS = findViewById(R.id.toggleGPS);
     }
 
     @Override
     public void onClick(View v){
+
+        /*radioTemperatureScale.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                switch(checkedId)
+                {
+                    case R.id.FScale:
+                        scaleSelected = "imperial";
+                        break;
+                    case R.id.CScale:
+                        scaleSelected = "metric";
+                        break;
+                }
+            }
+        });*/
+
 
         if(radioTemperatureScale.getCheckedRadioButtonId() == -1)
         {}
@@ -42,27 +63,24 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
             if(radioCelsius.isChecked())
                 scaleSelected = "metric";
             else
-                scaleSelected = "imperial";
+                if(radioFahrenheit.isChecked())
+                    scaleSelected = "imperial";
         }
+
+        boolean useGPS = switchGPS.isChecked();
+        intent.putExtra(MainActivity.TEMPERATURE_SCALE, scaleSelected);
+        intent.putExtra(MainActivity.USE_GPS, useGPS);
 
     }
 
     @Override
     public void onBackPressed(){
         passSettingsIntent();
-        PreferencesActivity.this.finish();
+        this.finish();
     }
 
     public void passSettingsIntent() {
-
-        boolean useGPS = switchGPS.isChecked();
-        Intent intent = new Intent(this, MainActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(MainActivity.TEMPERATURE_SCALE, scaleSelected);
-        intent.putExtra(MainActivity.USE_GPS, useGPS);
-
         startActivity(intent);
-
     }
 
 }

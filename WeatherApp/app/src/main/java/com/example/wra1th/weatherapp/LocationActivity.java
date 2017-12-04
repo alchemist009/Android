@@ -27,8 +27,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 
-import Classes.CitySelected;
-
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class LocationActivity extends AppCompatActivity implements View.OnClickListener{
@@ -36,7 +34,7 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
     double latitude;
     double longitude;
     Intent cityIntent;
-    boolean cityTextFlag;
+    boolean cityTextFlag = false;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -50,9 +48,9 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
 
 
     @Override
-    public void onPause(){
-        super.onPause();
-
+    public void onResume(){
+        super.onResume();
+        cityTextFlag = false;
     }
 
     public void onLocationChanged(Location location) {
@@ -115,7 +113,6 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-
         passIntent();
         this.finish();
     }
@@ -131,6 +128,7 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 cityIntent.putExtra(MainActivity.CITY_SELECTED, input.getText().toString());
+                cityTextFlag = true;
             }
         });
         builder.show();
@@ -142,7 +140,6 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
         switch(view.getId()){
 
             case R.id.city_button :
-                cityTextFlag = true;
                 showInputDialog();
                 cityIntent.putExtra(MainActivity.CITY_FLAG, cityTextFlag);
                 break;
