@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent">
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:paddingStart="40dp"
+        android:paddingEnd="30dp"
+        android:layout_marginStart="40dp"
+        android:text="@string/string_about"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        android:textAlignment="center"
+        android:elegantTextHeight="true"
+        android:textAllCaps="true"
+        android:textColorHint="@color/colorPrimaryDark"/>
+
+</LinearLayout>

@@ -30,5 +30,6 @@
     <string name="or">OR</string>
     <string name="gps_button">Use GPS</string>
     <string name="done">Done</string>
+    <string name="string_about">Simple Weather App designed by Gunjan Tomer v3.4 Dec 4th, 2017</string>
 
 </resources>

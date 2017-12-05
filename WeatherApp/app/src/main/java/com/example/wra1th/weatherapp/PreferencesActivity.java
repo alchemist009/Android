@@ -1,3 +1,9 @@
+/**
+ *
+ * Settings activity for the Weather app
+ *
+ * For now provides just a single setting to switch between the Fahrenheit and Celsius temperature scales.
+ */
 package com.example.wra1th.weatherapp;
 
 import android.content.Intent;
@@ -18,6 +24,10 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     String city;
     Intent intent;
 
+    /**
+     * Method to link layout file, handle incoming intents and link layout elements to variables
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +39,17 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         city = (String) getIntent().getSerializableExtra(CITY);
     }
 
+    /**
+     *
+     * Method to monitor if any of the buttons in the layout are clicked and take the corresponding actions
+     * @param v
+     */
     @Override
     public void onClick(View v){
+
+        /*
+        Monitoring a click on any of the radio buttons
+         */
 
         if(radioTemperatureScale.getCheckedRadioButtonId() == -1)
         {}
@@ -46,6 +65,9 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra(MainActivity.CITY_SELECTED, city);
     }
 
+    /**
+     * Method to pass intent and finish activity when back key is pressed
+     */
     @Override
     public void onBackPressed(){
         passSettingsIntent();

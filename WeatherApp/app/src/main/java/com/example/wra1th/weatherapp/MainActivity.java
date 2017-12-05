@@ -1,3 +1,32 @@
+/** Simple Weather app
+ * @author Gunjan Tomer
+ *
+ * NetID: gxt160930
+ *
+ *version: 3.4 12/04/2017
+ *
+ * Description:
+ * This simple weather app use the OpenWeatherMaps API to show real time weather data for a specific city or coordinates.
+ * The main activity consists of a view displaying the current city, the main weather conditions like Humidity, Wind Speed,
+ * Pressure and the time of the latest update. Finally the temperature is shown in either the Celsius scale or Fahrenheit
+ * scale based on user preference. Above the view is the action bar which consists of the app's name on the left and icons
+ * for refreshing the weather and changing the location. The overflow menu provides options for opening the Settings and
+ * an About option providing some information about the app.
+ *
+ * Clicking on the Refresh icon triggers a manual refresh of the weather displayed accompanied by a toast message notifying
+ * the user to prevent spamming. The Location icon opens the location activity which provides the user various options to
+ * view the weather for a different location than the current one. More details are provided in the activity itself.
+ * Clicking on the Settings option in the overflow menu opens up the Settings activity. For now as the only setting, the user can only select
+ * which scale to use for the temperature.
+ *
+ * Another feature added in the Main activity is the 'Pull-to-refresh' functionality. The user can pull down on the main activity
+ * view at any time to refresh it. This functionality is backed up by the refersh icon in the action bar to facilitate users with
+ * older devices unable to use pull to refresh.
+ *
+ * The user can exit the main activity and hence tha app itself by pressing the back key. A dialog pops up to confirm an axit
+ * before closing the app.
+ *
+ */
 package com.example.wra1th.weatherapp;
 
 import android.Manifest;
@@ -60,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
         handler = new Handler();
     }
 
+
+    /*
+    *Method run when the main activity is created for the first time i.e. on launching the app. This method is used
+    * to link the corresponding layout for the activity, set up the swipeRefreshLayout and display weather data for
+    * Dallas by default, if no other locations are found. The user is also asked for permissions to use location on
+    * activity creation, when running the app for the first time.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
         checkPermission();
     }
 
+    /**
+     * Method to check if location permissions have been granted or else generate a dialog asking for permissions.
+     */
+
     public void checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -108,11 +148,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Method to inflate the action bar menu from a layout file
+     * @param menu
+     * @return boolean
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.weather, menu);
         return true;
     }
+
+    /**
+     * Method to monitor the action bar items for clicks and take the respective actions
+     * @param item
+     * @return boolean
+     */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -137,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent locIntent = new Intent(this, LocationActivity.class);
                 locIntent.putExtra(LocationActivity.SCALE, scaleSelected);
                 startActivity(locIntent);
-                refreshWeather();
+                //refreshWeather();
                 break;
 
             case R.id.settings:
@@ -147,17 +198,19 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.about:
-                return false;
-
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
+                break;
         }
 
         return false;
     }
 
-    public void refreshWeather(){
-        weatherInfo.updateWeatherData("Dallas", scaleSelected );
-    }
-
+    /**
+     * Method to animate the refresh icon on the action bar. Works as intended but the weather update operation is too
+     * quick to even begin animating the icon.
+     * @param item
+     */
     public void refresh(MenuItem item) {
         LayoutInflater inflater = (LayoutInflater) getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ImageView iv = (ImageView) inflater.inflate(R.layout.layout_refresh, null);
@@ -168,11 +221,22 @@ public class MainActivity extends AppCompatActivity {
         item.setActionView(iv);
     }
 
+    /**
+     * Method to stop the refresh icon animation once the weather update operation is complete.
+     * @param item
+     */
+
     public void completeRefresh(MenuItem item)
     {
         item.getActionView().clearAnimation();
         item.setActionView(null);
     }
+
+    /**
+     * Method triggered when Main Activity is navigated to from some other activity or after a screen unlock
+     * All the intents passed from the other activities are handled here and used to change the weather parameters
+     * appropriately.
+     */
 
     @Override
     public void onResume() {
@@ -204,6 +268,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Method to handle the back press action in the main activity and display a dialog confirming an exit
+     */
+
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
@@ -222,16 +290,27 @@ public class MainActivity extends AppCompatActivity {
                 }).create().show();
     }
 
+    public void onAboutPressed() {
+
+
+    }
+
+
+
+
     /**
-     *
-     *
-     *
-     *
-     *
+     * Class to display used to handle the weather update and view change operations.
      */
 
 
     public class WeatherInfo {
+
+        /**
+         * Method to fetch a JSON object based on the city, coordinates or temperature
+         * scale obtained from the user or GPS.
+         * @param city
+         * @param scale
+         */
 
         private void updateWeatherData(final String city, final String scale) {
             new Thread() {
@@ -284,6 +363,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        /**
+         *
+         * Method to process the obtained JSON file and extract information
+         * @param json
+         */
+
         private void renderWeather(JSONObject json) {
             try {
                 cityField.setText(json.getString("name").toUpperCase(Locale.US) + "," +
@@ -315,6 +400,10 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        /**
+         *Method to link the various fields in the main activity view and set the typface for the weather icon
+         */
+
         public void showWeather() {
             cityField = findViewById(R.id.city_field);
             updatedField = findViewById(R.id.updated_field);
@@ -324,6 +413,15 @@ public class MainActivity extends AppCompatActivity {
 
             weatherIcon.setTypeface(weatherFont);
         }
+
+        /**
+         *
+         * Method to set the appropriate weather icon based on the prevalent conditions
+         * Assigned using the weather codes form the API
+         * @param actualId
+         * @param sunrise
+         * @param sunset
+         */
 
         private void setWeatherIcon(int actualId, long sunrise, long sunset) {
             int id = actualId / 100;

@@ -1,12 +1,23 @@
+/**
+ *
+ * Location Activity :
+ *
+ * This activity is launched when the user clicks on the location icon in the main activity's action bar.
+ * It consists of three different methods by which the user can change the location for which he want the weather
+ * displayed :
+ *
+ * 1. Selecting a city from a drop down list of major cities in the world and clicking the "Done" button
+ * 2. Clicking "Enter a city" and manually entering a city name
+ * 3. Clicking on "Use GPS" button and get the weather for the latest GPS location, or else the last known
+ *    location if GPS is turned off.
+ *
+ * Pressing the back key takes the user back to the main activity which now displays weather info for the selected city.
+ */
 package com.example.wra1th.weatherapp;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -17,12 +28,10 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -43,12 +52,14 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
     double latitude;
     double longitude;
     Intent cityIntent;
-    boolean cityTextFlag = false;
     public static String SCALE = "SCALE";
     private String scale;
     Spinner city_spinner;
 
-
+    /**
+     * Method to assign layout, link buttons to variables and initialize the drop down list of cities
+     * @param savedInstanceState
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
@@ -73,8 +84,13 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onResume(){
         super.onResume();
-        cityTextFlag = false;
     }
+
+    /**
+     * Method to handle a location object, display a toast with the most recent location coordinates,
+     * and assign those values to latitude, longitude variables. Just to confirm location is updating.
+     * @param location
+     */
 
     public void onLocationChanged(Location location) {
         // New location has now been determined
@@ -88,6 +104,9 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+    /**
+     * Helper method to pass the intent to Main activity
+     */
 
     public void passIntent() {
 
@@ -96,6 +115,10 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * Method to get the last known location using the Google FusedLocationProvider API which uses the combination of GPS and
+     * network to get the most accurate location data
+     */
     public void getLastLocation() {
         // Get last known recent location using new Google Play Services SDK (v11+)
         FusedLocationProviderClient locationClient = getFusedLocationProviderClient(this);
@@ -118,9 +141,6 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
                             onLocationChanged(location);
                             latitude =location.getLatitude();
                             longitude = location.getLongitude();
-                            /*locationIntent.putExtra(MainActivity.LONGITUDE, longitude);
-                            locationIntent.putExtra(MainActivity.LATITUDE, latitude);*/
-                            //passIntent(latitude, longitude);
                             cityIntent.putExtra(MainActivity.LATITUDE, latitude);
                             cityIntent.putExtra(MainActivity.LONGITUDE, longitude);
                         }
@@ -135,12 +155,22 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
                 });
     }
 
+    /**
+     * Method to pass the intent and finish activity when back pressed
+     */
+
     @Override
     public void onBackPressed() {
         passIntent();
         this.finish();
     }
 
+
+    /**
+     *
+     * Method to show a pop up dialog asking for user input for the city to show weather for.
+     * Adds the input to intent.
+     */
 
     private void showInputDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -152,11 +182,15 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 cityIntent.putExtra(MainActivity.CITY_SELECTED, input.getText().toString());
-                cityTextFlag = true;
             }
         });
         builder.show();
     }
+
+    /**
+     * Method to handle clicks on the three buttons in the layout and take the respective actions
+     * @param view
+     */
 
     @Override
     public void onClick(View view) {
@@ -165,7 +199,6 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.city_button :
                 showInputDialog();
-                //cityIntent.putExtra(MainActivity.CITY_FLAG, cityTextFlag);
                 break;
             case R.id.done_button :
                 String spinner_city_selected = city_spinner.getSelectedItem().toString();
@@ -177,27 +210,18 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-//    public void spinnerClick(){
-//
-//        city_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-//    }
+    /**
+     *
+     * Method to populate the drop down list of cities form a text file after sorting them alphabetically.
+     * @throws IOException
+     */
+
 
     public void populateSpinner() throws IOException {
         Vector<String>str=new Vector<String>();
         BufferedReader in = new BufferedReader(new InputStreamReader(getAssets().open("newCities.txt")));
 
         String line = in.readLine();
-        int index = 0;
         while (line != null) {
 
             str.add(line);
