@@ -44,7 +44,8 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
     double longitude;
     Intent cityIntent;
     boolean cityTextFlag = false;
-    private boolean isSpinnerClicked = false;
+    public static String SCALE = "SCALE";
+    private String scale;
     Spinner city_spinner;
 
 
@@ -56,6 +57,8 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
         Button button_city_input = (Button) findViewById(R.id.city_button);
         city_spinner = (Spinner) findViewById(R.id.city_spinner);
         Button button_spinner = (Button) findViewById(R.id.done_button);
+        Button button_gps = (Button) findViewById(R.id.gps_button);
+        button_gps.setOnClickListener(this);
         button_city_input.setOnClickListener(this);
         button_spinner.setOnClickListener(this);
         try {
@@ -63,7 +66,7 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //spinnerClick();
+        scale = (String) getIntent().getSerializableExtra(SCALE);
     }
 
 
@@ -88,6 +91,7 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
 
     public void passIntent() {
 
+        cityIntent.putExtra(MainActivity.TEMPERATURE_SCALE, scale);
         startActivity(cityIntent);
 
     }
@@ -161,11 +165,15 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.city_button :
                 showInputDialog();
-                cityIntent.putExtra(MainActivity.CITY_FLAG, cityTextFlag);
+                //cityIntent.putExtra(MainActivity.CITY_FLAG, cityTextFlag);
                 break;
             case R.id.done_button :
                 String spinner_city_selected = city_spinner.getSelectedItem().toString();
                 cityIntent.putExtra(MainActivity.CITY_SELECTED, spinner_city_selected);
+                break;
+            case R.id.gps_button :
+                cityIntent.putExtra(MainActivity.USE_GPS, true);
+                break;
         }
     }
 

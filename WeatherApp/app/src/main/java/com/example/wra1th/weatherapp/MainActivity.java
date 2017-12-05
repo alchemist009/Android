@@ -1,7 +1,6 @@
 package com.example.wra1th.weatherapp;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +26,8 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
 import Classes.FetchInfo;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
     public static String LONGITUDE = "LONGITUDE";
     public static String TEMPERATURE_SCALE = "TEMPERATURE_SCALE";
     public static final String USE_GPS = "USE_GPS";
-    public static String CITY_FLAG = "CITY_FLAG";
-    public static String CITY_SELECTED = "Dallas";
+    //public static String CITY_FLAG = "CITY_FLAG";
+    public static String CITY_SELECTED = "CITY_SELECTED";
     private SwipeRefreshLayout swipeRefreshLayout;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     public static Double longitude;
     public static Double latitude;
-    String scaleSelected = "imperial";
+    public String scaleSelected = "imperial";
 
     public MainActivity() {
         handler = new Handler();
@@ -71,8 +72,13 @@ public class MainActivity extends AppCompatActivity {
                 if(getIntent().getSerializableExtra(CITY_SELECTED) != null){
                     weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
                 }
-                else {
-                    weatherInfo.updateWeatherData(CITY_SELECTED, "imperial");
+                else
+                    if (scaleSelected.equals("metric")){
+                        weatherInfo.updateWeatherData("Dallas", scaleSelected);
+                    }
+                    else
+                    {
+                    weatherInfo.updateWeatherData("Dallas", "imperial");
                 }
                 weatherInfo.showWeather();
                 swipeRefreshLayout.setRefreshing(false);
@@ -114,23 +120,29 @@ public class MainActivity extends AppCompatActivity {
             case R.id.refresh:
                 refresh(item);
                 if(getIntent().getSerializableExtra(CITY_SELECTED) != null){
-                    weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
+                    if(getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null)
+                        weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), (String) getIntent().getSerializableExtra(TEMPERATURE_SCALE));
+                    else
+                        weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
                 }
                 else {
                     weatherInfo.updateWeatherData("Dallas", "imperial");
                 }
                 weatherInfo.showWeather();
                 completeRefresh(item);
+                Toast.makeText(this, "Refreshing weather...", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.change_city:
                 Intent locIntent = new Intent(this, LocationActivity.class);
+                locIntent.putExtra(LocationActivity.SCALE, scaleSelected);
                 startActivity(locIntent);
                 refreshWeather();
                 break;
 
             case R.id.settings:
                 Intent i = new Intent(this, PreferencesActivity.class);
+                i.putExtra(PreferencesActivity.CITY, (String) getIntent().getSerializableExtra(CITY_SELECTED));
                 startActivity(i);
                 break;
 
@@ -156,31 +168,11 @@ public class MainActivity extends AppCompatActivity {
         item.setActionView(iv);
     }
 
-    public void completeRefresh(MenuItem item) {
+    public void completeRefresh(MenuItem item)
+    {
         item.getActionView().clearAnimation();
         item.setActionView(null);
     }
-
-
-//    public void changeCity(String city) {
-//
-//
-//        changeSettings(city);
-//        new CitySelected(this).setCity(city);
-//    }
-//
-//    public void changeCityAndScale(String city, String scale) {
-//        new CitySelected(this).setCity(city);
-//        new CitySelected(this).setScale(scale);
-//    }
-//
-//    public void changeSettings(String city) {
-//        weatherInfo.updateWeatherData(city, "imperial");
-//    }
-//
-//    public void changeSettings(String city, String scale) {
-//        weatherInfo.updateWeatherData(city, scale);
-//    }
 
     @Override
     public void onResume() {
@@ -192,28 +184,25 @@ public class MainActivity extends AppCompatActivity {
 
         if (getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null){
             scaleSelected = (String) getIntent().getSerializableExtra(TEMPERATURE_SCALE);
-            weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
+            if(getIntent().getSerializableExtra(CITY_SELECTED) != null)
+                weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
+            else
+                weatherInfo.updateWeatherData("Dallas", scaleSelected);
             Toast.makeText(this, scaleSelected, Toast.LENGTH_SHORT).show();
         }
 
-        if(getIntent().getSerializableExtra(CITY_FLAG) != null ) {
-            if (((boolean) getIntent().getSerializableExtra(CITY_FLAG)) && getIntent().getSerializableExtra(CITY_SELECTED) != null) {
-                weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
-            } else {
+        if(getIntent().getSerializableExtra(USE_GPS) != null) {
+            if((boolean) getIntent().getSerializableExtra(USE_GPS))
                 weatherInfo.updateWeatherData(latitude, longitude, scaleSelected);
-            }
         }
+
+        if (getIntent().getSerializableExtra(CITY_SELECTED) != null) {
+                weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
+            }
+
         weatherInfo.showWeather();
     }
 
-    public void verifyStoragePermissions(Activity activity) {
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
-        }
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -306,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                         "Humidity: " + main.getString("humidity").toUpperCase(Locale.US) + "\n" +
                         "Pressure: " + main.getString("pressure") + "hPa");
 
-                if(scaleSelected == "imperial") {
+                if(Objects.equals(scaleSelected, "imperial")) {
                     currentTemperatureField.setText(String.format("%.2f", main.getDouble("temp")) + " °F");
                 }
                 else

@@ -1,18 +1,11 @@
 package com.example.wra1th.weatherapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
-import android.widget.Toast;
 
 public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -20,8 +13,9 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     private RadioGroup radioTemperatureScale;
     private RadioButton radioFahrenheit;
     private RadioButton radioCelsius;
-    //private Switch switchGPS;
     private String scaleSelected;
+    public static String CITY = "CITY";
+    String city;
     Intent intent;
 
     @Override
@@ -32,28 +26,11 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         radioTemperatureScale = findViewById(R.id.radioTempScale);
         radioFahrenheit = findViewById(R.id.FScale);
         radioCelsius = findViewById(R.id.CScale);
+        city = (String) getIntent().getSerializableExtra(CITY);
     }
 
     @Override
     public void onClick(View v){
-
-        /*radioTemperatureScale.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                switch(checkedId)
-                {
-                    case R.id.FScale:
-                        scaleSelected = "imperial";
-                        break;
-                    case R.id.CScale:
-                        scaleSelected = "metric";
-                        break;
-                }
-            }
-        });*/
-
 
         if(radioTemperatureScale.getCheckedRadioButtonId() == -1)
         {}
@@ -65,11 +42,8 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                 if(radioFahrenheit.isChecked())
                     scaleSelected = "imperial";
         }
-
-        //boolean useGPS = switchGPS.isChecked();
         intent.putExtra(MainActivity.TEMPERATURE_SCALE, scaleSelected);
-        //intent.putExtra(MainActivity.USE_GPS, useGPS);
-
+        intent.putExtra(MainActivity.CITY_SELECTED, city);
     }
 
     @Override
