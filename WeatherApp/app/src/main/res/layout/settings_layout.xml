@@ -8,35 +8,6 @@
     android:background="#f0cb8c"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="6"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/gps_toggle_text"
-            android:paddingStart="10sp"
-            android:paddingEnd="5sp"
-            android:paddingTop="20sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
-            android:textSize="20sp"/>
-
-        <Switch
-            android:id="@+id/toggleGPS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            tools:layout_editor_absoluteX="128dp"
-            tools:layout_editor_absoluteY="8dp" />
-
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

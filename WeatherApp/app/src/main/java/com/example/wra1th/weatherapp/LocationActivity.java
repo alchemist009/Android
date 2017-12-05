@@ -17,8 +17,11 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,12 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.Vector;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
@@ -35,6 +44,8 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
     double longitude;
     Intent cityIntent;
     boolean cityTextFlag = false;
+    private boolean isSpinnerClicked = false;
+    Spinner city_spinner;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +54,16 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
         getLastLocation();
         cityIntent = new Intent(this, MainActivity.class);
         Button button_city_input = (Button) findViewById(R.id.city_button);
+        city_spinner = (Spinner) findViewById(R.id.city_spinner);
+        Button button_spinner = (Button) findViewById(R.id.done_button);
         button_city_input.setOnClickListener(this);
+        button_spinner.setOnClickListener(this);
+        try {
+            populateSpinner();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //spinnerClick();
     }
 
 
@@ -143,7 +163,44 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
                 showInputDialog();
                 cityIntent.putExtra(MainActivity.CITY_FLAG, cityTextFlag);
                 break;
+            case R.id.done_button :
+                String spinner_city_selected = city_spinner.getSelectedItem().toString();
+                cityIntent.putExtra(MainActivity.CITY_SELECTED, spinner_city_selected);
         }
-
     }
+
+//    public void spinnerClick(){
+//
+//        city_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//    }
+
+    public void populateSpinner() throws IOException {
+        Vector<String>str=new Vector<String>();
+        BufferedReader in = new BufferedReader(new InputStreamReader(getAssets().open("newCities.txt")));
+
+        String line = in.readLine();
+        int index = 0;
+        while (line != null) {
+
+            str.add(line);
+            line = in.readLine();
+        }
+        Collections.sort(str);
+        Spinner spinner = (Spinner) findViewById(R.id.city_spinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,str);
+        spinner.setAdapter(adapter);
+    }
+
+
 }

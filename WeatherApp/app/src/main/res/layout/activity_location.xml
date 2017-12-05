@@ -5,46 +5,104 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.wra1th.weatherapp.LocationActivity"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:background="#f0cb8c">
     <TextView
         android:id="@+id/choose_city"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:text="@string/choose_city"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:paddingBottom="20dp"
-        android:paddingTop="10dp"/>
+        android:paddingTop="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
 
-    <Spinner
-        android:layout_width="150dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="40dp"
-        android:id="@+id/city_spinner"
-        android:animateLayoutChanges="true" />
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
+        <RelativeLayout
+            android:layout_width="250sp"
+            android:layout_height="65sp"
+            android:background="@drawable/spinner_background"
+            android:orientation="horizontal"
+            android:layout_gravity="left"
+            android:layout_marginStart="5sp">
+
+            <Spinner
+                android:id="@+id/city_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="70sp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="5dp"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@mipmap/wwpz" />
+
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/done_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8sp"
+            android:text="@string/done"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/or"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:layout_marginTop="15sp"/>
 
     <Button
         android:id="@+id/city_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="@string/search_box" />
+        android:text="@string/search_box"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"/>
 
     <TextView
-        android:id="@+id/recent_places"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/recent_places"
-        android:textStyle="bold" />
+        android:text="@string/or"
+        android:layout_gravity="center"
+        android:textSize="30sp"/>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </ListView>
+    <Button
+        android:id="@+id/gps_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/gps_button"
+        android:layout_marginTop="40dp"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"/>
+
+
+
 </LinearLayout>

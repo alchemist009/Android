@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public static String TEMPERATURE_SCALE = "TEMPERATURE_SCALE";
     public static final String USE_GPS = "USE_GPS";
     public static String CITY_FLAG = "CITY_FLAG";
-    public static String CITY_SELECTED;
+    public static String CITY_SELECTED = "Dallas";
     private SwipeRefreshLayout swipeRefreshLayout;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
                 }
                 else {
-                    weatherInfo.updateWeatherData("Dallas", "imperial");
+                    weatherInfo.updateWeatherData(CITY_SELECTED, "imperial");
                 }
                 weatherInfo.showWeather();
                 swipeRefreshLayout.setRefreshing(false);
@@ -190,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
             longitude = (Double) getIntent().getSerializableExtra(LONGITUDE);
         }
 
-        if (getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null) {
+        if (getIntent().getSerializableExtra(TEMPERATURE_SCALE) != null){
             scaleSelected = (String) getIntent().getSerializableExtra(TEMPERATURE_SCALE);
-            weatherInfo.updateWeatherData("Dallas", scaleSelected);
+            weatherInfo.updateWeatherData((String) getIntent().getSerializableExtra(CITY_SELECTED), scaleSelected);
             Toast.makeText(this, scaleSelected, Toast.LENGTH_SHORT).show();
         }
 
@@ -306,7 +306,11 @@ public class MainActivity extends AppCompatActivity {
                         "Humidity: " + main.getString("humidity").toUpperCase(Locale.US) + "\n" +
                         "Pressure: " + main.getString("pressure") + "hPa");
 
-                currentTemperatureField.setText(String.format("%.2f", main.getDouble("temp")) + " °F");
+                if(scaleSelected == "imperial") {
+                    currentTemperatureField.setText(String.format("%.2f", main.getDouble("temp")) + " °F");
+                }
+                else
+                    currentTemperatureField.setText(String.format("%.2f", main.getDouble("temp")) + " °C");
 
                 DateFormat df = DateFormat.getDateTimeInstance();
                 String updatedOn = df.format(new Date(json.getLong("dt") * 1000));

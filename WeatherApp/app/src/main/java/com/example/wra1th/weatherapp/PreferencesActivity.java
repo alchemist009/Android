@@ -20,7 +20,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     private RadioGroup radioTemperatureScale;
     private RadioButton radioFahrenheit;
     private RadioButton radioCelsius;
-    private Switch switchGPS;
+    //private Switch switchGPS;
     private String scaleSelected;
     Intent intent;
 
@@ -32,7 +32,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         radioTemperatureScale = findViewById(R.id.radioTempScale);
         radioFahrenheit = findViewById(R.id.FScale);
         radioCelsius = findViewById(R.id.CScale);
-        switchGPS = findViewById(R.id.toggleGPS);
     }
 
     @Override
@@ -67,9 +66,9 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
                     scaleSelected = "imperial";
         }
 
-        boolean useGPS = switchGPS.isChecked();
+        //boolean useGPS = switchGPS.isChecked();
         intent.putExtra(MainActivity.TEMPERATURE_SCALE, scaleSelected);
-        intent.putExtra(MainActivity.USE_GPS, useGPS);
+        //intent.putExtra(MainActivity.USE_GPS, useGPS);
 
     }
 
