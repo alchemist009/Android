@@ -290,14 +290,6 @@ public class MainActivity extends AppCompatActivity {
                 }).create().show();
     }
 
-    public void onAboutPressed() {
-
-
-    }
-
-
-
-
     /**
      * Class to display used to handle the weather update and view change operations.
      */
