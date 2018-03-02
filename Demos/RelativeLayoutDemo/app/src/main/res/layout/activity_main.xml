@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    tools:context="com.example.wra1th.relativelayoutdemo.MainActivity">
+
+
+    <TextView
+        android:id="@+id/H"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="H"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp"
+        android:background="@android:color/holo_red_light"
+        android:textColor="@android:color/white"/>
+
+
+    <TextView
+        style="@style/redBlock"
+        android:id="@+id/B"
+        android:text="B"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        style="@style/redBlock"
+        android:id="@+id/M"
+        android:text="M"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        style="@style/redBlock"
+        android:id="@+id/N"
+        android:text="N"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        style="@style/greenBlock"
+        android:id="@+id/F"
+        android:text="F"
+        android:layout_toLeftOf="@+id/H"
+        android:layout_above="@+id/H"/>
+
+    <TextView
+        style="@style/greenBlock"
+        android:id="@+id/G"
+        android:text="G"
+        android:layout_toRightOf="@+id/H"
+        android:layout_above="@+id/H"/>
+
+    <TextView
+        style="@style/greenBlock"
+        android:id="@+id/I"
+        android:text="I"
+        android:layout_toLeftOf="@+id/H"
+        android:layout_below="@+id/H"/>
+
+    <TextView
+        style="@style/greenBlock"
+        android:id="@+id/J"
+        android:text="J"
+        android:layout_toRightOf="@+id/H"
+        android:layout_below="@+id/H"/>
+
+    <TextView
+        style="@style/purpleBlock"
+        android:id="@+id/A"
+        android:text="A"
+        android:layout_toLeftOf="@+id/B"
+        android:layout_toRightOf="@+id/M"/>
+
+    <TextView
+        style="@style/orangeBlock"
+        android:id="@+id/D"
+        android:text="D"
+        android:layout_above="@+id/F"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        style="@style/orangeBlock"
+        android:id="@+id/K"
+        android:text="K"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/I"/>
+
+    <TextView
+        style="@style/orangeBlock"
+        android:id="@+id/L"
+        android:text="L"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/J"/>
+
+    <TextView
+        style="@style/orangeBlock"
+        android:id="@+id/E"
+        android:text="E"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/G"/><TextView
+        style="@style/purpleBlock"
+        android:id="@+id/C"
+        android:text="C"
+        android:layout_toRightOf="@+id/B"
+        android:layout_toLeftOf="@+id/N"/>
+
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:src="@drawable/android_eating_apple_2"/>
+
+
+
+
+
+</RelativeLayout>
