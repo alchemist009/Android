@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DrawableAndAnimationDemo</string>
+    <string name="button_count_sharedPrefs">BUTTON_COUNT</string>
+    <string name="click_count">Click this to get the count</string>
 </resources>

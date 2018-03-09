@@ -9,10 +9,17 @@
     android:gravity="center"
     tools:context="com.example.wra1th.drawableandanimationdemo.AnimationActivity">
 
+    <TextView
+        android:id="@+id/text_shared_pref"
+        android:text="This is here"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click moi"
+        android:text="Clicken mich"
         android:id="@+id/btn_anim"/>
 
     <TextView
