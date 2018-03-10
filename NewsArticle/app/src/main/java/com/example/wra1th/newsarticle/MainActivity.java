@@ -3,6 +3,9 @@ package com.example.wra1th.newsarticle;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -17,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvArticle;
     WebContentLoaderTask webContentLoaderTask;
+    ProgressBar progressBar;
+    Button retryButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +31,22 @@ public class MainActivity extends AppCompatActivity {
         bindView();
         // loadContentOfArticle();
         //loadContentFromWebPage();
+        setClickListener();
         webContentLoaderTask = new WebContentLoaderTask();
         webContentLoaderTask.execute();
-
     }
+
+    private void setClickListener() {
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webContentLoaderTask = new WebContentLoaderTask();
+                webContentLoaderTask.execute();
+            }
+        });
+    }
+
+
 
     private void loadContentFromWebPage() {
 
@@ -78,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void bindView() {
         tvArticle = findViewById(R.id.tv_article);
+        progressBar = findViewById(R.id.prog_bar);
+        retryButton = findViewById(R.id.retry_button);
     }
 
     private String getWebPageContent(String pageLink) {
@@ -86,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         String result = null;
 
         try {
-            Thread.sleep(5000);
+            //Thread.sleep(5000);
             URL urlObject = new URL(pageLink);
             connection = (HttpsURLConnection) urlObject.openConnection();
             // Timeout for reading InputStream arbitrarily set to 3000ms.
@@ -125,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }catch (IOException e){
             e.printStackTrace();
-        }catch (InterruptedException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
         finally {
@@ -149,12 +170,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+            retryButton.setVisibility(View.GONE);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            tvArticle.setText(s);
+            progressBar.setVisibility(View.GONE);
+            if(s != null) {
+                tvArticle.setText(s);
+                retryButton.setVisibility(View.GONE);
+            }
+            else{
+                retryButton.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
