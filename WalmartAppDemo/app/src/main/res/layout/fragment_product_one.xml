@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.wra1th.walmartappdemo.ProductOneFragment"
+    android:gravity="center"
+    android:background="@android:color/holo_blue_light">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/product1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fresh \n Beverages"
+        android:textColor="@android:color/holo_blue_dark"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:textSize="33sp"
+        android:gravity="center"
+        />
+
+</LinearLayout>
